@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tobias Wallner, Video Editor und Motion Designer</title>
+<meta name="description" content="Tobias Wallner, Video Editor und Motion Designer aus Salzburg. Ads, Reels und YouTube-Videos in DaVinci Resolve. Ab 11. Jänner 2027 verfügbar.">
+<meta name="theme-color" content="#EFEFED">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tobias Wallner, Video Editor und Motion Designer">
+<meta property="og:description" content="Ich schneide Ads, die verkaufen. Video Editor und Motion Designer aus Salzburg.">
+<meta property="og:url" content="https://wallnertobias.com/">
+<meta property="og:image" content="https://wallnertobias.com/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://wallnertobias.com/">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/special-gothic-expanded-one.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.classList.add('js')</script>
+<style>
+@font-face { font-family: "Special Gothic Expanded One"; src: url("assets/fonts/special-gothic-expanded-one.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Zalando Sans SemiExpanded"; src: url("assets/fonts/zalando-sans-semiexpanded.woff2") format("woff2"); font-weight: 200 900; font-display: swap; }
+@font-face { font-family: "Reenie Beanie"; src: url("assets/fonts/reenie-beanie.woff2") format("woff2"); font-display: swap; }
+
+:root {
+  --ink: #111;
+  --ink-2: #3c3c3c;
+  --white: #fff;
+  --red: #e2331c;
+  --band-muted: #bdbdbd;
+  --tape: rgba(233, 231, 223, .82);
+  --shadow: 0 10px 22px rgba(0, 0, 0, .22);
+  --shadow-up: 0 20px 36px rgba(0, 0, 0, .28);
+  --display: "Special Gothic Expanded One", "Arial Black", sans-serif;
+  --text: "Zalando Sans SemiExpanded", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --hand: "Reenie Beanie", "Bradley Hand", cursive;
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
+  --ease-draw: cubic-bezier(.65, 0, .35, 1);
+}
+
+* { box-sizing: border-box; }
+html { background: #efefed url("assets/paper-grid.jpg") center top / 1200px 1600px; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; scrollbar-color: var(--ink-2) #efefed; }
+body { margin: 0; overflow-x: clip; color: var(--ink); font: 400 17px/1.48 var(--text); -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
+img, video, svg { display: block; }
+h1, h2, h3, p, ol, ul, figure { margin: 0; padding: 0; font-weight: 400; }
+ol, ul { list-style: none; }
+a { color: inherit; text-underline-offset: .18em; text-decoration-thickness: from-font; }
+button { font: inherit; color: inherit; }
+::selection { background: var(--red); color: #fff; }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Das Papier füllt das Fenster, der Inhalt bleibt in dieser Spalte. Alles darin rechnet in Einheiten der Spalte. */
+.sheet { container-type: inline-size; max-width: 1120px; margin-inline: auto; }
+.sheet > * { --u: calc(100cqw / 1120); }
+
+.ln { display: block; overflow: clip; overflow-clip-margin: .04em; padding-bottom: .05em; margin-bottom: -.05em; }
+.ln > span { display: block; }
+.only-m { display: none !important; }
+.hand { font-family: var(--hand); line-height: 1; white-space: nowrap; }
+.arrow { position: absolute; overflow: visible; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Hero */
+.hero { position: relative; padding: calc(60 * var(--u)) calc(64 * var(--u)) calc(83 * var(--u)); }
+.top { display: flex; justify-content: space-between; font: 400 max(13px, calc(17 * var(--u))) / 1.12 var(--display); text-transform: uppercase; }
+.name { margin-top: calc(82 * var(--u)); }
+.name-row { display: flex; align-items: center; justify-content: space-between; height: calc(167 * var(--u)); font: 400 calc(218 * var(--u)) / 1 var(--display); }
+.mask { display: flex; overflow: clip; overflow-clip-margin: .02em; }
+.ch { display: block; }
+.o { position: relative; flex: none; width: calc(186 * var(--u)); height: calc(239 * var(--u)); color: var(--ink); }
+.face { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; cursor: pointer; }
+.pupil { transform-box: fill-box; transform-origin: center; transition: transform .09s ease-out; }
+.blink .pupil, .wink .pupil.right { transform: scaleY(.1); }
+.brows { transition: transform .22s var(--ease-out); }
+.happy .brows { transform: translateY(-7px); }
+.note-face { position: absolute; left: calc(50% + 20 * var(--u)); top: calc(100% + 24 * var(--u)); font-size: calc(38 * var(--u)); rotate: -3deg; }
+.arrow-face { left: calc(50% - 30 * var(--u)); top: calc(100% + 2 * var(--u)); width: calc(46 * var(--u)); height: calc(62 * var(--u)); }
+.intro { display: grid; grid-template-columns: minmax(0, 1fr) calc(400 * var(--u)); column-gap: calc(40 * var(--u)); margin-top: calc(147 * var(--u)); }
+h1 { font: 400 calc(46 * var(--u)) / 1.06 var(--display); text-transform: uppercase; }
+.lede, .ads-copy, .motion-copy, .about-copy, .kontakt-sub { text-wrap: pretty; }
+.lede { font-size: max(15px, calc(17 * var(--u))); }
+.avail { display: inline; }
+.btn { position: relative; display: inline-block; isolation: isolate; overflow: hidden; margin-top: calc(30 * var(--u)); padding: calc(15 * var(--u)) calc(24 * var(--u)); background: var(--ink); color: var(--white); font: 600 max(14px, calc(15 * var(--u))) / 1.3 var(--text); text-decoration: none; transition: transform .16s var(--ease-out); }
+.btn::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform .34s var(--ease-out); }
+.btn:active { transform: scale(.97); }
+
+/* Gerissene Bänder */
+.band { position: relative; z-index: 1; isolation: isolate; color: var(--white); }
+.band::before { content: ""; position: absolute; z-index: -1; top: calc(60 * var(--u)); bottom: calc(60 * var(--u)); left: 50%; width: 100vw; margin-left: -50vw; background: #161616; }
+.band-bg { position: absolute; left: 50%; width: 100vw; margin-left: -50vw; top: calc(-40 * var(--u)); bottom: calc(-40 * var(--u)); pointer-events: none; background: center / max(100%, calc(1920 * var(--u))) 100% no-repeat; }
+.band--ads .band-bg { background-image: url("assets/band-ads.webp"); }
+.band--kontakt .band-bg { background-image: url("assets/band-kontakt.webp"); }
+
+/* Ads */
+.band--ads { min-height: calc(660 * var(--u)); }
+.ads-text { position: relative; padding: calc(96 * var(--u)) 0 calc(80 * var(--u)) calc(64 * var(--u)); width: calc(500 * var(--u)); }
+.hb { font: 400 calc(62 * var(--u)) / 1.02 var(--display); text-transform: uppercase; }
+.ads-copy { margin-top: calc(46 * var(--u)); width: calc(400 * var(--u)); font-size: max(15px, calc(17 * var(--u))); }
+.note-ads { position: absolute; left: calc(70 * var(--u)); top: calc(506 * var(--u)); font-size: calc(38 * var(--u)); rotate: -3deg; }
+.arrow-ads { left: calc(328 * var(--u)); top: calc(486 * var(--u)); width: calc(120 * var(--u)); height: calc(58 * var(--u)); }
+.clip { position: absolute; left: var(--x); top: var(--y); width: calc(260 * var(--u)); }
+.clip-a { --x: calc(570 * var(--u)); --y: calc(84 * var(--u)); --r: -3deg; }
+.clip-b { --x: calc(804 * var(--u)); --y: calc(104 * var(--u)); --r: 2.4deg; --d: 90ms; }
+.clip-stack { position: relative; }
+.clip-red { position: absolute; inset: calc(-8 * var(--u)); background: var(--red); rotate: calc(var(--r) - 2.4deg); }
+.clip-frame { position: relative; padding: calc(6 * var(--u)); background: var(--white); rotate: var(--r); }
+.clip video { width: 100%; aspect-ratio: 248 / 441; object-fit: cover; background: var(--ink); }
+.play { position: absolute; inset: calc(6 * var(--u)); display: grid; place-items: center; padding: 0; border: 0; background: none; cursor: pointer; }
+.play[hidden] { display: none; }
+.play svg { width: calc(60 * var(--u)); height: calc(60 * var(--u)); transition: transform .2s var(--ease-out); }
+.play:active svg { transform: scale(.93); }
+.clip figcaption { margin-top: calc(22 * var(--u)); padding-left: calc(30 * var(--u)); font-weight: 600; font-size: max(14px, calc(15 * var(--u))); }
+
+/* Abzüge */
+.print { position: relative; display: block; padding: calc(12 * var(--u)) calc(12 * var(--u)) 0; background: var(--white); color: var(--ink); text-decoration: none; box-shadow: var(--shadow); rotate: var(--r, 0deg); } /* taste-skill-ignore */
+.print img, .print video { width: 100%; height: auto; object-fit: cover; background: #efefed; }
+.cap { display: block; padding: calc(12 * var(--u)) calc(2 * var(--u)) calc(15 * var(--u)); }
+.cap b { display: block; font: 400 max(13px, calc(20 * var(--u))) / 1.2 var(--display); }
+.cap span { display: block; margin-top: calc(3 * var(--u)); font-size: max(13px, calc(14 * var(--u))); color: var(--ink-2); }
+
+a.print:active { scale: .985; }
+
+/* Short-Form */
+.short { padding: calc(112 * var(--u)) calc(64 * var(--u)) calc(70 * var(--u)); }
+.short h2 { font: 400 calc(84 * var(--u)) / 1.1 var(--display); text-transform: uppercase; text-align: center; }
+.short-sub { margin-top: calc(10 * var(--u)); text-align: center; font-size: max(15px, calc(17 * var(--u))); }
+.short-grid { display: flex; justify-content: center; gap: calc(30 * var(--u)); margin-top: calc(48 * var(--u)); }
+.short-grid .print { width: calc(280 * var(--u)); flex: none; }
+.short-grid .print:nth-child(2) { margin-top: calc(18 * var(--u)); }
+.short-grid img, .short-grid video { aspect-ratio: 256 / 330; }
+
+/* Motion Graphics */
+.motion { padding: calc(30 * var(--u)) calc(64 * var(--u)) calc(70 * var(--u)); }
+.motion-head { display: flex; justify-content: space-between; gap: calc(40 * var(--u)); }
+.motion h2 { font: 400 calc(50 * var(--u)) / 1.1 var(--display); text-transform: uppercase; white-space: nowrap; }
+.motion-copy { width: calc(400 * var(--u)); flex: none; font-size: max(15px, calc(17 * var(--u))); }
+.motion-grid { position: relative; height: calc(460 * var(--u)); margin-top: calc(26 * var(--u)); }
+.motion-grid .print { position: absolute; }
+.mo-big { left: 0; top: calc(30 * var(--u)); width: calc(644 * var(--u)); --r: -.8deg; }
+.mo-a { left: calc(694 * var(--u)); top: 0; width: calc(296 * var(--u)); --r: 1.6deg; --d: 90ms; padding: calc(10 * var(--u)) calc(10 * var(--u)) 0; }
+.mo-b { left: calc(688 * var(--u)); top: calc(216 * var(--u)); width: calc(296 * var(--u)); --r: -1.2deg; --d: 170ms; padding: calc(10 * var(--u)) calc(10 * var(--u)) 0; }
+.motion-grid img { aspect-ratio: 16 / 9; }
+.mo-big .cap b { font-size: max(13px, calc(17 * var(--u))); }
+.mo-a .cap b, .mo-b .cap b { font-size: max(13px, calc(13 * var(--u))); }
+@media (max-width: 1100px) { .mo-a .cap b, .mo-b .cap b { font: 600 13px / 1.25 var(--text); } }
+
+/* Über mich */
+.about { display: grid; grid-template-columns: calc(280 * var(--u)) calc(330 * var(--u)) calc(290 * var(--u)); column-gap: calc(49 * var(--u)); padding: calc(56 * var(--u)) calc(64 * var(--u)) calc(50 * var(--u)) calc(58 * var(--u)); }
+.select { position: relative; width: calc(280 * var(--u)); height: calc(328 * var(--u)); margin-top: calc(6 * var(--u)); }
+.select-box { position: absolute; inset: 0; outline: 1.5px solid var(--red); }
+.select img { position: absolute; left: calc(10 * var(--u)); top: calc(16 * var(--u)); width: calc(260 * var(--u)); height: calc(310 * var(--u)); }
+.select i { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; background: var(--white); border: 1.5px solid var(--red); }
+.select i:nth-of-type(1) { left: 0; top: 0; }
+.select i:nth-of-type(2) { left: 50%; top: 0; }
+.select i:nth-of-type(3) { left: 100%; top: 0; }
+.select i:nth-of-type(4) { left: 0; top: 50%; }
+.select i:nth-of-type(5) { left: 100%; top: 50%; }
+.select i:nth-of-type(6) { left: 0; top: 100%; }
+.select i:nth-of-type(7) { left: 50%; top: 100%; }
+.select i:nth-of-type(8) { left: 100%; top: 100%; }
+.about h2 { font: 400 calc(50 * var(--u)) / 1.1 var(--display); text-transform: uppercase; }
+.about-copy { margin-top: calc(16 * var(--u)); font-size: max(15px, calc(17 * var(--u))); line-height: 1.48; }
+.about h3 { font: 400 calc(20 * var(--u)) / 1.2 var(--display); text-transform: uppercase; }
+.about-side { padding-top: calc(10 * var(--u)); }
+.stations { margin-top: calc(12 * var(--u)); }
+.stations li { padding-block: calc(5 * var(--u)) calc(6 * var(--u)); }
+.stations b { display: block; font-weight: 600; font-size: max(13px, calc(13 * var(--u))); }
+.stations span, .tools { display: block; font-size: max(14px, calc(14 * var(--u))); color: var(--ink-2); line-height: 1.4; }
+.about-side h3 + .tools { margin-top: calc(10 * var(--u)); }
+.about-side .tools-h { margin-top: calc(18 * var(--u)); }
+
+/* Fotos */
+.fotos { position: relative; height: calc(540 * var(--u)); }
+.pic { position: absolute; left: var(--x); top: var(--y); width: var(--w); padding: var(--p); background: var(--white); box-shadow: var(--shadow); rotate: var(--r); } /* taste-skill-ignore */
+.pic img { width: 100%; height: auto; }
+.pic::before { content: ""; position: absolute; left: 50%; top: calc(-13 * var(--u)); width: calc(92 * var(--u)); height: calc(26 * var(--u)); margin-left: calc(-46 * var(--u)); background: var(--tape); rotate: -2deg; }
+.pic-desk { --x: calc(48 * var(--u)); --y: calc(26 * var(--u)); --w: calc(524 * var(--u)); --p: calc(12 * var(--u)); --r: -1.6deg; }
+.pic-spike { --x: calc(538 * var(--u)); --y: calc(50 * var(--u)); --w: calc(300 * var(--u)); --p: calc(12 * var(--u)); --r: 1.9deg; --d: 110ms; }
+.pic-me { --x: calc(822 * var(--u)); --y: calc(44 * var(--u)); --w: calc(234 * var(--u)); --p: calc(11 * var(--u)); --r: -2.6deg; --d: 220ms; }
+.note-foto { position: absolute; font-size: calc(38 * var(--u)); }
+.nf-a { left: calc(86 * var(--u)); top: calc(452 * var(--u)); rotate: -2deg; }
+.nf-b { left: calc(590 * var(--u)); top: calc(466 * var(--u)); rotate: 2deg; }
+.nf-c { left: calc(888 * var(--u)); top: calc(372 * var(--u)); rotate: -3deg; }
+.arrow-foto { left: calc(842 * var(--u)); top: calc(342 * var(--u)); width: calc(44 * var(--u)); height: calc(58 * var(--u)); }
+
+/* Kontakt */
+.band--kontakt { margin-top: calc(40 * var(--u)); margin-bottom: calc(52 * var(--u)); min-height: calc(520 * var(--u)); }
+.kontakt { position: relative; padding: calc(92 * var(--u)) calc(64 * var(--u)) 0; }
+.kontakt h2 { font: 400 calc(84 * var(--u)) / 1.1 var(--display); text-transform: uppercase; }
+.kontakt-sub { margin-top: calc(10 * var(--u)); font-size: max(15px, calc(17 * var(--u))); }
+.mail { display: inline-block; margin-top: calc(26 * var(--u)); font-weight: 600; font-size: calc(32 * var(--u)); line-height: 1.2; text-decoration-color: rgba(255, 255, 255, .45); transition: text-decoration-color .2s ease; }
+.tel { display: block; width: fit-content; margin-top: calc(12 * var(--u)); font-size: max(16px, calc(17 * var(--u))); text-decoration: none; }
+.note-kontakt { position: absolute; left: calc(624 * var(--u)); top: calc(262 * var(--u)); font-size: calc(38 * var(--u)); rotate: 4deg; }
+.arrow-kontakt { left: calc(548 * var(--u)); top: calc(270 * var(--u)); width: calc(62 * var(--u)); height: calc(40 * var(--u)); }
+.imprint { position: relative; padding: calc(70 * var(--u)) calc(64 * var(--u)) 0; font-size: 14px; color: var(--band-muted); }
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover::before { transform: scaleX(1); }
+  .play:hover svg { transform: scale(1.07); }
+  a.print { transition: rotate .3s var(--ease-out), translate .3s var(--ease-out), box-shadow .3s var(--ease-out); }
+  a.print:hover { rotate: calc(var(--r, 0deg) * .3); translate: 0 -6px; box-shadow: var(--shadow-up); } /* taste-skill-ignore */
+  .mail:hover { text-decoration-color: var(--red); }
+  .tel:hover { text-decoration: underline; }
+}
+
+/* Zweite Komposition für Handy und kleine Tablets */
+@media (max-width: 819px) {
+  .sheet { max-width: 560px; }
+  .sheet > * { --u: calc(100cqw / 390); }
+  .only-d { display: none !important; }
+  .only-m { display: block !important; }
+  .hero { padding: calc(24 * var(--u)) calc(20 * var(--u)) calc(34 * var(--u)); }
+  .top { font-size: max(13px, calc(13 * var(--u))); }
+  .name { margin-top: calc(38 * var(--u)); }
+  .name-row { height: calc(59 * var(--u)); font-size: calc(76.5 * var(--u)); }
+  .o { width: calc(66 * var(--u)); height: calc(85 * var(--u)); }
+  .note-face { left: calc(50% + 14 * var(--u)); top: calc(100% + 8 * var(--u)); font-size: calc(28 * var(--u)); }
+  .arrow-face { left: calc(50% - 16 * var(--u)); top: calc(100% + 2 * var(--u)); width: calc(30 * var(--u)); height: calc(40 * var(--u)); }
+  .intro { display: block; margin-top: calc(82 * var(--u)); }
+  h1 { font-size: calc(29 * var(--u)); line-height: 1.12; }
+  .lede { margin-top: calc(18 * var(--u)); font-size: max(15px, calc(16 * var(--u))); }
+  .avail { display: block; margin-top: calc(10 * var(--u)); font-size: max(14px, calc(15 * var(--u))); color: var(--ink-2); }
+  .btn { display: block; margin-top: calc(20 * var(--u)); padding-block: calc(16 * var(--u)); text-align: center; }
+
+  .band-bg { background-size: 100% 100%; }
+  .band--ads .band-bg { background-image: url("assets/band-ads-m.webp"); }
+  .band--kontakt .band-bg { background-image: url("assets/band-kontakt-m.webp"); }
+  .band--ads { min-height: calc(650 * var(--u)); }
+  .ads-text { padding: calc(56 * var(--u)) calc(20 * var(--u)) 0; width: auto; }
+  .hb { font-size: calc(28 * var(--u)); line-height: 1.12; }
+  .ads-copy { margin-top: calc(16 * var(--u)); width: auto; font-size: max(15px, calc(16 * var(--u))); }
+  .clips { position: relative; height: calc(360 * var(--u)); margin-top: calc(36 * var(--u)); }
+  .clip { width: calc(158 * var(--u)); }
+  .clip-a { --x: calc(28 * var(--u)); --y: 0px; }
+  .clip-b { --x: calc(204 * var(--u)); --y: calc(14 * var(--u)); }
+  .clip-red { inset: calc(-7 * var(--u)); }
+  .play svg { width: calc(44 * var(--u)); height: calc(44 * var(--u)); }
+  .clip figcaption { margin-top: calc(20 * var(--u)); padding-left: calc(6 * var(--u)); }
+
+  .short { padding: calc(72 * var(--u)) calc(20 * var(--u)) calc(50 * var(--u)); }
+  .short h2 { font-size: calc(36 * var(--u)); text-align: left; }
+  .short-sub { margin-top: calc(6 * var(--u)); text-align: left; font-size: max(15px, calc(16 * var(--u))); }
+  .short-grid { display: block; margin-top: calc(26 * var(--u)); }
+  .short-grid .print { display: flex; align-items: center; gap: calc(16 * var(--u)); width: 100%; padding: calc(10 * var(--u)); }
+  .short-grid .print + .print { margin-top: calc(20 * var(--u)); }
+  .short-grid img, .short-grid video { flex: none; width: calc(102 * var(--u)); aspect-ratio: 102 / 126; }
+  .short-grid .cap { padding: 0; }
+  .short-grid .cap b { font-size: max(14px, calc(17 * var(--u))); }
+
+  .motion { padding: calc(10 * var(--u)) calc(20 * var(--u)) calc(44 * var(--u)); }
+  .motion-head { display: block; }
+  .motion h2 { font-size: calc(31 * var(--u)); }
+  .motion-copy { margin-top: calc(8 * var(--u)); width: auto; font-size: max(15px, calc(16 * var(--u))); }
+  .motion-grid { height: auto; margin-top: calc(28 * var(--u)); }
+  .motion-grid .print { position: relative; left: auto; top: auto; }
+  .mo-big { width: 100%; padding: calc(10 * var(--u)) calc(10 * var(--u)) 0; }
+  .mo-big .cap b { font-size: max(13px, calc(13 * var(--u))); }
+  .motion-small { display: grid; grid-template-columns: 1fr 1fr; gap: calc(14 * var(--u)); margin-top: calc(20 * var(--u)); }
+  .mo-a, .mo-b { width: auto; padding: calc(7 * var(--u)) calc(7 * var(--u)) 0; }
+  .mo-a .cap b, .mo-b .cap b { font: 600 max(13px, calc(13 * var(--u))) / 1.25 var(--text); }
+  .cap { padding: calc(10 * var(--u)) calc(2 * var(--u)) calc(11 * var(--u)); }
+
+  .about { display: block; padding: calc(30 * var(--u)) calc(20 * var(--u)) calc(30 * var(--u)); }
+  .select { width: calc(242 * var(--u)); height: calc(284 * var(--u)); margin: 0 auto calc(32 * var(--u)); }
+  .select img { left: calc(12 * var(--u)); top: calc(12 * var(--u)); width: calc(218 * var(--u)); height: calc(260 * var(--u)); }
+  .about h2 { font-size: calc(36 * var(--u)); }
+  .about-copy { margin-top: calc(10 * var(--u)); }
+  .about-side { padding-top: calc(28 * var(--u)); }
+  .about h3 { font-size: calc(18 * var(--u)); }
+
+  .fotos { height: calc(672 * var(--u)); }
+  .pic::before { width: calc(70 * var(--u)); height: calc(20 * var(--u)); margin-left: calc(-35 * var(--u)); top: calc(-10 * var(--u)); }
+  .pic-desk { --x: calc(23 * var(--u)); --y: calc(19 * var(--u)); --w: calc(344 * var(--u)); --p: calc(9 * var(--u)); }
+  .pic-spike { --x: calc(18 * var(--u)); --y: calc(342 * var(--u)); --w: calc(200 * var(--u)); --p: calc(9 * var(--u)); }
+  .pic-me { --x: calc(226 * var(--u)); --y: calc(336 * var(--u)); --w: calc(146 * var(--u)); --p: calc(8 * var(--u)); }
+  .note-foto { font-size: calc(30 * var(--u)); }
+  .nf-a { left: calc(26 * var(--u)); top: calc(288 * var(--u)); rotate: -1.5deg; }
+  .nf-b { left: calc(44 * var(--u)); top: calc(620 * var(--u)); rotate: 1.5deg; }
+  .nf-c { left: calc(250 * var(--u)); top: calc(546 * var(--u)); }
+  .arrow-foto { left: calc(216 * var(--u)); top: calc(520 * var(--u)); width: calc(36 * var(--u)); height: calc(44 * var(--u)); }
+
+  .band--kontakt { margin-top: calc(34 * var(--u)); margin-bottom: calc(40 * var(--u)); min-height: calc(440 * var(--u)); }
+  .kontakt { padding: calc(70 * var(--u)) calc(20 * var(--u)) 0; }
+  .kontakt h2 { font-size: calc(36 * var(--u)); }
+  .kontakt-sub { font-size: max(15px, calc(16 * var(--u))); }
+  .mail { margin-top: calc(28 * var(--u)); font-size: calc(21 * var(--u)); }
+  .tel { font-size: max(16px, calc(17 * var(--u))); }
+  .imprint { padding: calc(64 * var(--u)) calc(20 * var(--u)) 0; }
+}
+
+/* Bewegung. Gedrucktes landet, Gezeichnetes schreibt sich. Ohne Script oder mit reduzierter Bewegung bleibt alles sichtbar. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .ch { animation: rise .85s var(--ease-out) var(--t, 0ms) both; }
+  .js .face .d { stroke-dasharray: 1.01 1; animation: draw var(--dur, .46s) var(--ease-draw) var(--t, 0ms) both; }
+  .js .face .f { animation: draw var(--dur, .46s) var(--ease-draw) var(--t, 0ms) both, fill-in .34s ease calc(var(--t, 0ms) + var(--dur, .46s) - 160ms) both; }
+  .js .face .fade { animation: fade .24s ease var(--t, 0ms) both; }
+  .js .arrow-face path { stroke-dasharray: 1.01 1; animation: draw .42s var(--ease-draw) 1.42s both; }
+  .js .arrow-face .head { animation-duration: .2s; animation-delay: 1.8s; }
+  .js .note-face { animation: write .8s ease-in-out 1.74s both; }
+  .js h1 .ln > span { animation: rise .8s var(--ease-out) var(--t, 420ms) both; }
+  .js .lede, .js .hero .btn { animation: lift .7s var(--ease-out) var(--t, 760ms) both; }
+
+  .js [data-in] .ln > span { transition: translate .85s var(--ease-out) var(--d, 0ms); }
+  .js [data-in]:not(.in) .ln > span { translate: 0 106%; }
+  .js [data-in] .ln:nth-child(2) > span { transition-delay: 70ms; }
+  .js [data-in] .ln:nth-child(3) > span { transition-delay: 140ms; }
+  .js [data-in] .ln:nth-child(4) > span { transition-delay: 210ms; }
+
+  .js .hand[data-in] > span { display: block; transition: clip-path .8s ease-in-out var(--d, 0ms); clip-path: inset(-30% -6% -30% -2%); }
+  .js .hand[data-in]:not(.in) > span { clip-path: inset(-30% 100% -30% -2%); }
+  .js .arrow[data-in] path { stroke-dasharray: 1.01 1; transition: stroke-dashoffset .46s var(--ease-draw) var(--d, 0ms); }
+  .js .arrow[data-in] .head { transition-duration: .2s; transition-delay: calc(var(--d, 0ms) + 420ms); }
+  .js .arrow[data-in]:not(.in) { visibility: hidden; }
+  .js .arrow[data-in]:not(.in) path { stroke-dashoffset: 1.01; }
+
+  .js [data-land] { transition: opacity .4s ease var(--d, 0ms), translate .9s var(--ease-out) var(--d, 0ms), rotate .9s var(--ease-out) var(--d, 0ms), scale .9s var(--ease-out) var(--d, 0ms); }
+  .js [data-land]:not(.in) { opacity: 0; translate: 0 calc(34 * var(--u)); rotate: calc(var(--r, 0deg) + 4deg); scale: 1.035; }
+  .js .pic::before { transition: opacity .25s ease calc(var(--d, 0ms) + 420ms), scale .3s var(--ease-out) calc(var(--d, 0ms) + 420ms); }
+  .js .pic:not(.in)::before { opacity: 0; scale: 1.25; }
+
+  .js .clip-frame { transition: opacity .4s ease var(--d, 0ms), translate .9s var(--ease-out) var(--d, 0ms), rotate .9s var(--ease-out) var(--d, 0ms), scale .9s var(--ease-out) var(--d, 0ms); }
+  .js .clip:not(.in) .clip-frame { opacity: 0; translate: 0 calc(34 * var(--u)); rotate: calc(var(--r) + 5deg); scale: 1.04; }
+  .js .clip-red { transition: opacity .2s linear calc(var(--d, 0ms) + 240ms), rotate .75s var(--ease-out) calc(var(--d, 0ms) + 240ms); }
+  .js .clip:not(.in) .clip-red { opacity: 0; rotate: var(--r); }
+  .js .clip figcaption { transition: opacity .5s ease calc(var(--d, 0ms) + 420ms); }
+  .js .clip:not(.in) figcaption { opacity: 0; }
+
+  .js .select-box { transition: scale .9s var(--ease-out), opacity .3s ease; }
+  .js .select:not(.in) .select-box { opacity: 0; scale: .84; }
+
+  .js .done[data-land] { transition: none; }
+  .js a.print.done[data-land] { transition: rotate .3s var(--ease-out), translate .3s var(--ease-out), box-shadow .3s var(--ease-out); }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .pupil, .brows { transition: none; } }
+
+@keyframes rise { from { transform: translateY(106%); } to { transform: none; } }
+@keyframes lift { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes write { from { clip-path: inset(-30% 100% -30% -2%); } to { clip-path: inset(-30% -6% -30% -2%); } }
+@keyframes draw { 0% { opacity: 0; stroke-dashoffset: 1.01; } 1% { opacity: 1; } 100% { opacity: 1; stroke-dashoffset: 0; } }
+@keyframes fill-in { from { fill-opacity: 0; } to { fill-opacity: 1; } }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+  <header class="hero">
+    <div class="top">
+      <p>Video Editor /<br>Motion Designer</p>
+      <p>2026</p>
+    </div>
+
+    <p class="name">
+      <span class="vh">Tobias Wallner</span>
+      <span class="name-row" aria-hidden="true">
+        <span class="mask"><span class="ch" style="--t:60ms">T</span></span>
+        <span class="o">
+          <svg class="face" viewBox="116 58 288 370" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path class="d f" pathLength="1" style="--t:520ms" d="M158 250C138 236 122 250 128 278C132 300 148 316 168 308" fill="#fff" stroke="#111" stroke-width="8"/>
+            <path class="d f" pathLength="1" style="--t:560ms" d="M362 250C382 236 398 250 392 278C388 300 372 316 352 308" fill="#fff" stroke="#111" stroke-width="8"/>
+            <path class="d" pathLength="1" style="--t:700ms;--dur:.2s" d="M146 262C142 276 150 286 156 282M374 262C378 276 370 286 364 282" stroke="#111" stroke-width="5"/>
+            <path class="d f" pathLength="1" style="--t:300ms;--dur:.62s" d="M156 196C150 262 160 322 190 366C208 394 236 418 260 418C284 418 312 394 330 366C360 322 370 262 364 196C330 150 190 150 156 196Z" fill="#fff" stroke="#111" stroke-width="8"/>
+            <path class="d f" pathLength="1" style="--t:620ms;--dur:.56s" d="M150 262C140 214 140 150 176 110C206 76 262 62 312 72C356 82 384 118 386 170C388 206 380 240 372 262C366 244 362 226 356 212C350 222 340 226 332 218C334 204 328 192 322 186C314 206 300 214 288 206C292 194 288 182 280 176C270 200 252 212 236 204C240 192 236 182 230 178C220 200 204 212 190 206C194 198 192 190 188 186C178 202 168 222 164 238C160 248 156 256 150 262Z" fill="#111" stroke="#111" stroke-width="6"/>
+            <path class="d" pathLength="1" style="--t:1060ms;--dur:.3s" d="M218 104C240 120 254 142 258 170M266 92C292 108 308 130 310 158M176 142C190 154 202 168 206 184M320 100C342 116 356 140 358 176" stroke="#fff" stroke-width="5"/>
+            <g class="brows"><path class="d" pathLength="1" style="--t:1020ms;--dur:.26s" d="M194 250C208 240 228 238 244 246M276 246C292 238 312 240 326 250" stroke="#111" stroke-width="9"/></g>
+            <path class="d" pathLength="1" style="--t:1100ms;--dur:.24s" d="M202 280C212 268 230 268 240 280M280 280C290 268 308 268 318 280" stroke="#111" stroke-width="6"/>
+            <g class="eyes fade" style="--t:1180ms">
+              <ellipse class="pupil" cx="221" cy="282" rx="9" ry="10" fill="#111"/>
+              <ellipse class="pupil right" cx="299" cy="282" rx="9" ry="10" fill="#111"/>
+            </g>
+            <path class="d" pathLength="1" style="--t:1200ms;--dur:.24s" d="M262 288C260 310 248 330 252 340C256 348 270 350 278 344" stroke="#111" stroke-width="6"/>
+            <path class="d" pathLength="1" style="--t:1280ms;--dur:.24s" d="M226 372C244 384 278 386 298 368" stroke="#111" stroke-width="7"/>
+            <path class="d" pathLength="1" style="--t:1440ms;--dur:.1s" d="M294 362C298 364 302 368 302 374" stroke="#111" stroke-width="5"/>
+          </svg>
+          <svg class="arrow arrow-face" viewBox="0 0 46 62"><path pathLength="1" d="M26 56C10 44 8 22 22 6"/><path class="head" pathLength="1" d="M6 22L22 4L36 20"/></svg>
+          <span class="hand note-face">das bin ich</span>
+        </span>
+        <span class="mask">
+          <span class="ch" style="--t:180ms">B</span><span class="ch" style="--t:230ms">I</span><span class="ch" style="--t:280ms">A</span><span class="ch" style="--t:330ms">S</span>
+        </span>
+      </span>
+    </p>
+
+    <div class="intro">
+      <div>
+        <h1 aria-label="Ich schneide Ads, die verkaufen."><span class="ln" aria-hidden="true"><span>Ich schneide Ads,</span></span><span class="ln" aria-hidden="true"><span style="--t:490ms">die verkaufen.</span></span></h1>
+        <a class="btn only-d" href="mailto:wallnertobias@snokz.com?subject=Anfrage%20Video%20Editing">E-Mail schreiben</a>
+      </div>
+      <p class="lede">Video Editor und Motion Designer aus Salzburg. Für die Salzburger Ölmühle: Konzept, Dreh, Schnitt und Animationen. <span class="avail">Ab 11. Jänner 2027 verfügbar, fest oder Freelance.</span></p>
+      <a class="btn only-m" href="mailto:wallnertobias@snokz.com?subject=Anfrage%20Video%20Editing">E-Mail schreiben</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="band band--ads" id="arbeiten" aria-labelledby="h-ads">
+      <div class="band-bg" aria-hidden="true"></div>
+      <div class="ads-text">
+        <h2 class="hb" id="h-ads" data-in aria-label="Monatsumsatz verdreifacht.">
+          <span class="only-d" aria-hidden="true"><span class="ln"><span>Monats-</span></span><span class="ln"><span>umsatz</span></span><span class="ln"><span>verdrei-</span></span><span class="ln"><span>facht.</span></span></span>
+          <span class="only-m" aria-hidden="true"><span class="ln"><span>Monatsumsatz</span></span><span class="ln"><span>verdreifacht.</span></span></span>
+        </h2>
+        <p class="ads-copy">Zwei Ads für die Salzburger Ölmühle. Konzept, Dreh, Schnitt und Animationen aus einer Hand.</p>
+      </div>
+      <p class="hand note-ads only-d" data-in><span>alles selbst gedreht</span></p>
+      <svg class="arrow arrow-ads only-d" data-in style="--d:500ms" viewBox="0 0 120 58" aria-hidden="true"><path pathLength="1" d="M6 34C40 56 84 50 112 14"/><path class="head" pathLength="1" d="M84 14L114 10L112 40"/></svg>
+
+      <div class="clips">
+        <figure class="clip clip-a" data-in>
+          <div class="clip-stack">
+            <span class="clip-red" aria-hidden="true"></span>
+            <div class="clip-frame">
+              <video controls playsinline preload="none" poster="assets/ad-warum.jpg" aria-label="Ad Warum teurer?"><source src="assets/warum-teurer.mp4" type="video/mp4"></video>
+              <button class="play" type="button" hidden aria-label="Ad Warum teurer? abspielen"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#fff"/><path d="M26 21L45 32L26 43Z" fill="#111"/></svg></button>
+            </div>
+          </div>
+          <figcaption>Warum teurer?</figcaption>
+        </figure>
+        <figure class="clip clip-b" data-in>
+          <div class="clip-stack">
+            <span class="clip-red" aria-hidden="true"></span>
+            <div class="clip-frame">
+              <video controls playsinline preload="none" poster="assets/ad-rohkost.jpg" aria-label="Ad Rohkostsaat"><source src="assets/rohkostsaat.mp4" type="video/mp4"></video>
+              <button class="play" type="button" hidden aria-label="Ad Rohkostsaat abspielen"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#fff"/><path d="M26 21L45 32L26 43Z" fill="#111"/></svg></button>
+            </div>
+          </div>
+          <figcaption>Rohkostsaat</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="short" aria-labelledby="h-short">
+      <h2 id="h-short" data-in><span class="ln"><span>3 Mio. Views</span></span></h2>
+      <p class="short-sub">21 Videos auf zwei TikTok-Kanälen.</p>
+      <div class="short-grid">
+        <a class="print" data-land style="--r:-3deg" href="https://www.tiktok.com/@thefusionlabfx/video/7657554111285497110" target="_blank" rel="noopener">
+          <video class="loop" muted loop playsinline preload="none" poster="assets/poster-wifi.jpg" width="720" height="1280" aria-label="Wi-Fi-Schalter als Animation"><source src="assets/wifi-schalter.mp4" type="video/mp4"></video>
+          <span class="cap"><b>512.500 Views</b><span>UI-Animationen</span></span>
+        </a>
+        <a class="print" data-land style="--r:1.8deg;--d:90ms" href="https://www.tiktok.com/@getroofed/video/7627914329571986710" target="_blank" rel="noopener">
+          <img src="assets/tt-508.jpg" alt="Beachvolleyball-Spielzug" width="720" height="1280" loading="lazy">
+          <span class="cap"><b>508.200 Views</b><span>Volleyball-Edit</span></span>
+        </a>
+        <a class="print" data-land style="--r:-1.4deg;--d:180ms" href="https://www.tiktok.com/@thefusionlabfx/video/7692458855669796118" target="_blank" rel="noopener">
+          <img src="assets/poster-intro.jpg" alt="YouTube-Intro in der DaVinci-Timeline" width="720" height="1280" loading="lazy">
+          <span class="cap"><b>89.900 Views</b><span>YouTube-Intro</span></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="motion" aria-labelledby="h-motion">
+      <div class="motion-head">
+        <h2 id="h-motion" data-in><span class="ln"><span>The Fusion Lab</span></span></h2>
+        <p class="motion-copy">Auf <a href="https://www.youtube.com/@thefusionlabfx" target="_blank" rel="noopener">The Fusion Lab</a> mit 1.700 Abos baue ich virale Animationen in DaVinci Resolve nach und erkläre sie auf Englisch.</p>
+      </div>
+      <div class="motion-grid">
+        <a class="print mo-big" data-land href="https://www.youtube.com/watch?v=XrSAaw6xPQU" target="_blank" rel="noopener">
+          <img src="assets/yt-XrSAaw6xPQU.jpg" alt="Thumbnail Viral Animation" width="1280" height="720" loading="lazy">
+          <span class="cap"><b>Viral Animations in Fusion</b><span>19.000 Views</span></span>
+        </a>
+        <div class="motion-small">
+          <a class="print mo-a" data-land href="https://www.youtube.com/watch?v=MmnxqsyATnQ" target="_blank" rel="noopener">
+            <img src="assets/yt-MmnxqsyATnQ.jpg" alt="Thumbnail Apple-Style UI Animation" width="1280" height="720" loading="lazy">
+            <span class="cap"><b>Apple-Style UI Animation</b><span>18.000 Views</span></span>
+          </a>
+          <a class="print mo-b" data-land href="https://www.youtube.com/watch?v=DhHoqJD-jU4" target="_blank" rel="noopener">
+            <img src="assets/yt-DhHoqJD-jU4.jpg" alt="Thumbnail 3D Tutorial" width="1280" height="720" loading="lazy">
+            <span class="cap"><b>3D Tricks in DaVinci Resolve</b><span>15.000 Views</span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="ueber" aria-labelledby="h-ueber">
+      <div class="select" data-in>
+        <div class="select-box">
+          <img src="assets/tobias.svg" alt="Gezeichnetes Porträt von Tobias Wallner" width="520" height="620" loading="lazy">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+      </div>
+      <div>
+        <h2 id="h-ueber" data-in><span class="ln"><span>Servus</span></span></h2>
+        <p class="about-copy">Ich bin 20 und komme aus Seeham bei Salzburg. Weil ich Ads auch selbst geschaltet habe, schneide ich auf das Ergebnis hin. Baustellen kenne ich von innen, Wettkampf aus der 2. Bundesliga im Volleyball.</p>
+      </div>
+      <div class="about-side">
+        <h3>Werdegang</h3>
+        <ol class="stations">
+          <li><b>2021 bis 2024</b><span>Lehre Garten- und Landschaftsbau</span></li>
+          <li><b>2023 bis 2026</b><span>Lehre mit Matura, BFI Salzburg</span></li>
+          <li><b>2025</b><span>Eigene Marke Tailwag Prints</span></li>
+          <li><b>2025 bis 2026</b><span>E-Commerce, Salzburger Ölmühle</span></li>
+        </ol>
+        <h3 class="tools-h">Tools</h3>
+        <p class="tools">DaVinci Resolve, Fusion, Photoshop, Figma, Meta Ads</p>
+      </div>
+    </section>
+
+    <section class="fotos" aria-label="Fotos von Tobias">
+      <figure class="pic pic-desk" data-land><img src="assets/me-schnittplatz.jpg" alt="Schnittplatz mit DaVinci Resolve auf dem Monitor, blaues Licht" width="1400" height="1050" loading="lazy"></figure>
+      <figure class="pic pic-spike" data-land><img src="assets/me-volleyball.jpg" alt="Tobias mit der Nummer 12 beim Angriff am Netz" width="1000" height="1337" loading="lazy"></figure>
+      <figure class="pic pic-me" data-land><img src="assets/me-portrait.jpg" alt="Spiegel-Foto von Tobias mit Kappe und weißem T-Shirt" width="960" height="1200" loading="lazy"></figure>
+      <p class="hand note-foto nf-a" data-in style="--d:300ms"><span>mein Schnittplatz</span></p>
+      <p class="hand note-foto nf-b" data-in style="--d:420ms"><span>2. Bundesliga</span></p>
+      <svg class="arrow arrow-foto" data-in style="--d:560ms" viewBox="0 0 44 58" aria-hidden="true"><path pathLength="1" d="M24 52C10 40 8 20 20 6"/><path class="head" pathLength="1" d="M6 22L20 4L34 18"/></svg>
+      <p class="hand note-foto nf-c" data-in style="--d:760ms"><span>und in echt</span></p>
+    </section>
+  </main>
+
+  <div class="band band--kontakt">
+    <div class="band-bg" aria-hidden="true"></div>
+    <section class="kontakt" id="kontakt" aria-labelledby="h-kontakt">
+      <h2 id="h-kontakt" data-in><span class="ln"><span>Schreib mir.</span></span></h2>
+      <p class="kontakt-sub">Fest oder Freelance, remote oder im Raum Salzburg.</p>
+      <a class="mail" href="mailto:wallnertobias@snokz.com?subject=Anfrage%20Video%20Editing">wallnertobias@snokz.com</a>
+      <a class="tel" href="tel:+436607590433">+43 660 7590433</a>
+      <svg class="arrow arrow-kontakt only-d" data-in viewBox="0 0 62 40" aria-hidden="true"><path pathLength="1" d="M56 14C40 4 22 10 8 28"/><path class="head" pathLength="1" d="M6 8L6 32L30 30"/></svg>
+      <p class="hand note-kontakt only-d" data-in style="--d:300ms"><span>freu mich</span></p>
+    </section>
+    <footer class="imprint">Impressum: Tobias Wallner, Biodorf-Weg 1, 5164 Seeham, Österreich.</footer>
+  </div>
+</div>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Einblenden beim Scrollen
+  const items = document.querySelectorAll('[data-in], [data-land]');
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach(el => el.classList.add('in', 'done'));
+  } else {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(({ isIntersecting, target }) => {
+        if (!isIntersecting) return;
+        target.classList.add('in');
+        io.unobserve(target);
+        setTimeout(() => target.classList.add('done'), 1500);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+    items.forEach(el => io.observe(el));
+  }
+
+  // Ads starten auf Klick, ohne Script bleiben die normalen Video-Controls
+  const clips = [...document.querySelectorAll('.clip')];
+  clips.forEach(clip => {
+    const video = clip.querySelector('video');
+    const play = clip.querySelector('.play');
+    video.controls = false;
+    play.hidden = false;
+    play.addEventListener('click', () => {
+      clips.forEach(other => { if (other !== clip) other.querySelector('video').pause(); });
+      play.hidden = true;
+      video.controls = true;
+      video.play();
+      video.focus({ preventScroll: true });
+    });
+    video.addEventListener('ended', () => {
+      video.controls = false;
+      video.load();
+      play.hidden = false;
+      play.focus({ preventScroll: true });
+    });
+  });
+
+  // Der Wi-Fi-Clip läuft nur, solange er zu sehen ist
+  const loop = document.querySelector('.loop');
+  if (loop && !reduce && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) loop.play().catch(() => {});
+      else loop.pause();
+    }, { threshold: .3 }).observe(loop);
+  }
+
+  // Das Gesicht schaut dem Cursor nach und blinzelt
+  const face = document.querySelector('.face');
+  const eyes = face.querySelector('.eyes');
+  if (reduce) return;
+
+  let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+  const tick = () => {
+    x += (tx - x) * .15;
+    y += (ty - y) * .15;
+    eyes.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`;
+    raf = Math.abs(tx - x) + Math.abs(ty - y) > .03 ? requestAnimationFrame(tick) : 0;
+  };
+  const start = () => { if (!raf) raf = requestAnimationFrame(tick); };
+  const aim = (px, py) => {
+    const r = face.getBoundingClientRect();
+    const dx = px - (r.left + r.width / 2);
+    const dy = py - (r.top + r.height * .6);
+    const dist = Math.hypot(dx, dy) || 1;
+    const pull = Math.min(1, dist / 240);
+    tx = dx / dist * pull * 6;
+    ty = dy / dist * pull * 4.5;
+    start();
+  };
+  addEventListener('pointermove', e => aim(e.clientX, e.clientY), { passive: true });
+  addEventListener('pointerdown', e => aim(e.clientX, e.clientY), { passive: true });
+
+  // Am Handy schauen die Augen beim Scrollen mit
+  if (matchMedia('(pointer: coarse)').matches) {
+    let last = scrollY, rest = 0;
+    addEventListener('scroll', () => {
+      const delta = scrollY - last;
+      last = scrollY;
+      if (scrollY > innerHeight) return;
+      ty = Math.max(-4.5, Math.min(4.5, delta * .6));
+      tx = 0;
+      start();
+      clearTimeout(rest);
+      rest = setTimeout(() => { ty = 0; start(); }, 220);
+    }, { passive: true });
+  }
+
+  const flash = (name, ms) => { face.classList.add(name); setTimeout(() => face.classList.remove(name), ms); };
+  const blink = () => {
+    flash('blink', 130);
+    setTimeout(blink, 2400 + Math.random() * 3600);
+  };
+  setTimeout(blink, 3200);
+  face.addEventListener('pointerenter', () => flash('wink', 260));
+  face.addEventListener('click', () => flash('wink', 260));
+
+  // Fährt jemand über den Button, zieht das Gesicht die Augenbrauen hoch
+  document.querySelectorAll('.btn, .mail').forEach(link => {
+    link.addEventListener('pointerenter', () => face.classList.add('happy'));
+    link.addEventListener('pointerleave', () => face.classList.remove('happy'));
+  });
+})();
+</script>
+</body>
+</html>
